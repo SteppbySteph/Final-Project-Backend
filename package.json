@@ -20,6 +20,5 @@
     "express-list-endpoints": "^6.0.0",
     "mongoose": "^6.3.4",
     "nodemon": "^2.0.15"
-  },
-  "type": "module"
+  }
 }
