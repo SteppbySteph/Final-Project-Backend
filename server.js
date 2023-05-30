@@ -5,7 +5,9 @@ import bcrypt from "bcrypt"
 import crypto from "crypto"
 import listEndpoints from "express-list-endpoints"
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/sup-api"
+require('dotenv').config()
+
+const mongoUrl = process.env.MONGO_URL || "mongodb:localhost/test"
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
 
@@ -22,6 +24,13 @@ app.get("/", (req, res) => {
   res.send(listEndpoints(app))
 })
 
+app.get("/test", (req, res) => {
+  res.send("hello there")
+})
+
+app.get("/testing", (req, res) => {
+  res.send("hello there")
+})
 ///////////////////////User section/////////////////////
 const UserSchema = new mongoose.Schema({
   username: {
@@ -51,14 +60,14 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model("User", UserSchema)
 
 //create a user
-app.post ("/register", async (req, res) => {
+app.post("/register", async (req, res) => {
 
   const { username, email, password } = req.body
   try {
     const salt = bcrypt.genSaltSync()
 
-    if(username.length < 8) {
-      res.status(400).json ({
+    if (username.length < 8) {
+      res.status(400).json({
         response: "Username must be at least 8 characters long",
         success: false
       })
@@ -78,23 +87,23 @@ app.post ("/register", async (req, res) => {
         success: true
       })
     }
-  } catch(error) {
+  } catch (error) {
     res.status(400).json({
       response: "Something went wrong. Please check your credentials.",
       success: false
     })
-   }
-  })
+  }
+})
 
 //delete a user  
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params
 
-  try { 
-    const deleted = await User.findOneAndDelete({_id: id})
+  try {
+    const deleted = await User.findOneAndDelete({ _id: id })
     if (deleted) {
       res.status(200).json({
-        success: true, 
+        success: true,
         response: `User ${deleted.username} has been deleted.`
       })
     } else {
@@ -104,7 +113,7 @@ app.delete("/users/:id", async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      success: false, 
+      success: false,
       response: error
     })
   }
@@ -116,21 +125,21 @@ app.patch("/users/:id", async (req, res) => {
   const { updatedName } = req.body
 
   try {
-    const userToUpdate = await User.findByIdAndUpdate({_id: id}, {username: updatedName})
+    const userToUpdate = await User.findByIdAndUpdate({ _id: id }, { username: updatedName })
     if (userToUpdate) {
       res.status(200).json({
-        success: true, 
+        success: true,
         response: `User ${userToUpdate.username} has been updated`
       })
     } else {
       res.status(404).json({
-        success: false, 
+        success: false,
         response: "Not found"
       })
     }
   } catch (error) {
     res.status(400).json({
-      success: false, 
+      success: false,
       response: error
     })
   }
@@ -141,7 +150,7 @@ app.post("/login", async (req, res) => {
   const { username, password, email } = req.body
 
   try {
-    const user = await User.findOne({username, email})
+    const user = await User.findOne({ username, email })
 
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
@@ -155,7 +164,7 @@ app.post("/login", async (req, res) => {
       res.status(400).json({
         response: "Credentials don't match",
         success: false
-      }) 
+      })
     }
   } catch (error) {
     res.status(400).json({
@@ -169,7 +178,7 @@ app.post("/login", async (req, res) => {
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization")
   try {
-    const user = await User.findOne({accessToken: accessToken})
+    const user = await User.findOne({ accessToken: accessToken })
     if (user) {
       next();
     } else {
@@ -219,9 +228,9 @@ const Post = mongoose.model("Post", PostSchema)
 //if authenticated user  - get posts
 app.get("/posts", authenticateUser)
 app.get("/posts", async (req, res) => {
-  const posts = await Post.find({}).sort({createdAt: -1})
+  const posts = await Post.find({}).sort({ createdAt: -1 })
   res.status(200).json({
-    response: posts, 
+    response: posts,
     success: true
   })
 })
@@ -233,7 +242,7 @@ app.post("/posts", async (req, res) => {
   const accessToken = req.header("Authorization")
   try {
     const queriedUser = await User.findOne({ accessToken })
-    const newPost = await new Post({ 
+    const newPost = await new Post({
       message: message,
       creator: {
         creatorId: queriedUser._id,
@@ -242,7 +251,7 @@ app.post("/posts", async (req, res) => {
       }
     }).save()
     res.status(201).json({
-      response: newPost, 
+      response: newPost,
       success: true
     })
   } catch (error) {
@@ -257,9 +266,9 @@ app.post("/posts", async (req, res) => {
 app.post("/posts/:id/likes", async (req, res) => {
   const { id } = req.params
   try {
-    const postToUpdate = await Post.findByIdAndUpdate(id, {$inc: {likes: 1}})
+    const postToUpdate = await Post.findByIdAndUpdate(id, { $inc: { likes: 1 } })
     res.status(200).json({
-      response: `Likes for \'${postToUpdate.message}\' has been increased`, 
+      response: `Likes for \'${postToUpdate.message}\' has been increased`,
       success: true
     })
   } catch (error) {
@@ -274,11 +283,11 @@ app.post("/posts/:id/likes", async (req, res) => {
 app.delete("/posts/:id", async (req, res) => {
   const { id } = req.params
 
-  try { 
-    const deleted = await Post.findOneAndDelete({_id: id})
+  try {
+    const deleted = await Post.findOneAndDelete({ _id: id })
     if (deleted) {
       res.status(200).json({
-        success: true, 
+        success: true,
         response: `Post with this message \'${deleted.message}\' has been deleted.`
       });
     } else {
@@ -288,7 +297,7 @@ app.delete("/posts/:id", async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({
-      success: false, 
+      success: false,
       response: error
     })
   }
@@ -300,21 +309,21 @@ app.patch("/posts/:id", async (req, res) => {
   const { updatedMessage } = req.body
 
   try {
-    const postToUpdate = await Post.findByIdAndUpdate({_id: id}, {message: updatedMessage})
+    const postToUpdate = await Post.findByIdAndUpdate({ _id: id }, { message: updatedMessage })
     if (postToUpdate) {
       res.status(200).json({
-        success: true, 
+        success: true,
         response: `Post with message \'${postToUpdate.message}\' has been updated`
       })
     } else {
       res.status(404).json({
-        success: false, 
+        success: false,
         response: "Not found"
       })
     }
   } catch (error) {
     res.status(400).json({
-      success: false, 
+      success: false,
       response: error
     })
   }
