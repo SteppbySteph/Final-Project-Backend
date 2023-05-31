@@ -69,10 +69,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex")
-  }
+  // accessToken: {
+  //   type: String,
+  //   default: () => crypto.randomBytes(128).toString("hex")
+  // }
 })
 
 const User = mongoose.model("User", UserSchema)
@@ -82,7 +82,7 @@ app.post("/register", async (req, res) => {
 
   const { username, email, password } = req.body
   try {
-    const salt = bcrypt.genSaltSync()
+    // const salt = bcrypt.genSaltSync()
 
     if (username.length < 8) {
       res.status(400).json({
@@ -93,13 +93,13 @@ app.post("/register", async (req, res) => {
       const newUser = await new User({
         username: username,
         email: email,
-        password: bcrypt.hashSync(password, salt)
+        // password: bcrypt.hashSync(password, salt)
       }).save()
       res.status(201).json({
         response: {
           username: newUser.username,
           email: newUser.email,
-          accessToken: newUser.accessToken,
+          // accessToken: newUser.accessToken,
           userId: newUser._id
         },
         success: true
@@ -170,12 +170,13 @@ app.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username, email })
 
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user) {
+      // (user && bcrypt.compareSync(password, user.password))
       res.status(200).json({
         success: true,
         username: user.username,
         email: user.email,
-        accessToken: user.accessToken,
+        // accessToken: user.accessToken,
         userId: user._id
       })
     } else {
@@ -193,25 +194,25 @@ app.post("/login", async (req, res) => {
 })
 
 //use below to enter post section
-const authenticateUser = async (req, res, next) => {
-  const accessToken = req.header("Authorization")
-  try {
-    const user = await User.findOne({ accessToken: accessToken })
-    if (user) {
-      next();
-    } else {
-      res.status(401).json({
-        response: "Please log in",
-        success: false
-      })
-    }
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      success: false
-    })
-  }
-}
+// const authenticateUser = async (req, res, next) => {
+//   const accessToken = req.header("Authorization")
+//   try {
+//     const user = await User.findOne({ accessToken: accessToken })
+//     if (user) {
+//       next();
+//     } else {
+//       res.status(401).json({
+//         response: "Please log in",
+//         success: false
+//       })
+//     }
+//   } catch (error) {
+//     res.status(400).json({
+//       response: error,
+//       success: false
+//     })
+//   }
+// }
 
 ///////////////////////Post section/////////////////////
 const CreatorSchema = new mongoose.Schema({
@@ -244,7 +245,7 @@ const PostSchema = new mongoose.Schema({
 const Post = mongoose.model("Post", PostSchema)
 
 //if authenticated user  - get posts
-app.get("/posts", authenticateUser)
+// app.get("/posts", authenticateUser)
 app.get("/posts", async (req, res) => {
   const posts = await Post.find({}).sort({ createdAt: -1 })
   res.status(200).json({
@@ -254,31 +255,31 @@ app.get("/posts", async (req, res) => {
 })
 
 //create a post
-app.post("/posts", authenticateUser)
-app.post("/posts", async (req, res) => {
-  const { message } = req.body
-  const accessToken = req.header("Authorization")
-  try {
-    const queriedUser = await User.findOne({ accessToken })
-    const newPost = await new Post({
-      message: message,
-      creator: {
-        creatorId: queriedUser._id,
-        name: queriedUser.username,
-        email: queriedUser.email
-      }
-    }).save()
-    res.status(201).json({
-      response: newPost,
-      success: true
-    })
-  } catch (error) {
-    res.status(400).json({
-      response: error,
-      success: false
-    })
-  }
-})
+// app.post("/posts", authenticateUser)
+// app.post("/posts", async (req, res) => {
+//   const { message } = req.body
+//   const accessToken = req.header("Authorization")
+//   try {
+//     const queriedUser = await User.findOne({ accessToken })
+//     const newPost = await new Post({
+//       message: message,
+//       creator: {
+//         creatorId: queriedUser._id,
+//         name: queriedUser.username,
+//         email: queriedUser.email
+//       }
+//     }).save()
+//     res.status(201).json({
+//       response: newPost,
+//       success: true
+//     })
+//   } catch (error) {
+//     res.status(400).json({
+//       response: error,
+//       success: false
+//     })
+//   }
+// })
 
 //update likes for a post
 app.post("/posts/:id/likes", async (req, res) => {
