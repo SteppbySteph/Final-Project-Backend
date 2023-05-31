@@ -1,0 +1,37 @@
+[
+    {
+        "id": 11,
+        "category": "worldwide",
+        "place": "Mexico  - Isla Holbox",
+        "image": "/assets/mexico-isla-holbox.jpeg",
+        "description": "A beautiful little Mexican paradise north of Yucatan Peninsula with a lagoon full of pelicans and flamingos."
+    },
+    {
+        "id": 12,
+        "category": "worldwide",
+        "place": "USA - Lake Tahoe",
+        "image": "/assets/usa-lake-tahoe.jpg",
+        "description": "This largest alpine lake in North America, is perhaps the most photographed SUP location in the world. Conditions are great from late spring until early fall."
+    },
+    {
+        "id": 13,
+        "category": "worldwide",
+        "place": "Turks and Caicos",
+        "image": "/assets/turks-and-caicos.jpeg",
+        "description": "An archipelago of 40 coral islands surrounded by turquoise waters, the Turks and Caicos Islands are a paddleboarding haven."
+    },
+    {
+        "id": 14,
+        "category": "worldwide",
+        "place": "Hawaii",
+        "image": "/assets/hawaii.jpeg",
+        "description": "The place where SUP was born. Hawaii has everything a paddle boarder could ever want. Look out for sea turtles and whales."
+    },
+    {
+        "id": 15,
+        "category": "worldwide",
+        "place": "Philippines - Boracay",
+        "image": "/assets/philippines-boracay.jpeg",
+        "description": "Glide on the pristine waters of Boracay and enjoy the natural beauty around. Perfect for beginners."
+    }
+]

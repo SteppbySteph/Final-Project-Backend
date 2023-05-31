@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "category": "sweden",
+        "place": "Göta Kanal",
+        "image": "/assets/gota-kanal.jpeg",
+        "description": "With its 190 km, the Göta Canal offers a unique paddle environment. The canal has both longer and shorter paddle-friendly stretches with many attractions along the way."
+    },
+    {
+        "id": 2,
+        "category": "sweden",
+        "place": "Åre",
+        "image": "/assets/are.jpeg",
+        "description": "Here you can experience crystal clear water from your SUP board, while you breathe refreshing mountain air. At Åresjön, paddling is offered on remote beaches overlooking mountain peaks."
+    },
+    {
+        "id": 3,
+        "category": "sweden",
+        "place": "Bohuslän",
+        "image": "/assets/bohuslan.jpeg",
+        "description": "Float over the oysters and feel the salt in the air. On the west coast, surrounded by fine beaches and archipelago classic boathouses, you can paddle among cobs and skerries. "
+    },
+    {
+        "id": 4,
+        "category": "sweden",
+        "place": "Kullaberg",
+        "image": "/assets/kullaberg.jpeg",
+        "description": "On the peninsula Kullen are Kullaberg's dramatic cliffs that stretch out to Öresund. If you are lucky on your side, you may encounter a seal or a porpoise during the adventure."
+    },
+    {
+        "id": 5,
+        "category": "sweden",
+        "place": "Stockholm",
+        "image": "/assets/stockholm.jpeg",
+        "description": "From Reimersholme you can discover Stockholm from the water by paddling to Kungsholmen and further towards the city center."
+    }
+]

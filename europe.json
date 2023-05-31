@@ -1,0 +1,37 @@
+[
+    {
+        "id": 6,
+        "category": "europe",
+        "place": "England - Jurassic Coast",
+        "image": "/assets/england-jurassic-coast.jpg",
+        "description": "Paddle through the Durdle Door arch and explore one of the best SUP destinations in europe with white-cliff coasts and caves."
+    },
+    {
+        "id": 7,
+        "category": "europe",
+        "place": "Slovenia - Lake Bled",
+        "image": "/assets/slovenia-lake-bled.jpeg",
+        "description": "The picturesque Slovenian lake with a small island in the middle. The boats are crowded out here - so why don't you jump on your paddleboard to explore it?"
+    },
+    {
+        "id": 8,
+        "category": "europe",
+        "place": "Portugal - Lagos",
+        "image": "/assets/portugal-lagos.jpeg",
+        "description": "Paddle in the famouse grottoes of Pinta da Piedade in Lagos and you will encounter a magical SUP tour."
+    },
+    {
+        "id": 9,
+        "category": "europe",
+        "place": "Norway",
+        "image": "/assets/norway-lofoten.jpeg",
+        "description": "Enjoy the small fishing towns from an Arctic enviroment. Unique and delightful landscape like no other!"
+    },
+    {
+        "id": 10,
+        "category": "europe",
+        "place": "Italy - Venice",
+        "image": "/assets/italy-venice.jpeg",
+        "description": "Paddle alongside the gondolas in Venice and enjoy the city from the water."
+    }
+]

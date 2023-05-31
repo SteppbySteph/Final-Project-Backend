@@ -4,8 +4,11 @@ import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import listEndpoints from "express-list-endpoints"
+import sweden from "./sweden.json"
+import europe from "./europe.json"
+import worldwide from "./worldwide.json"
 
-require('dotenv').config()
+import 'dotenv/config'
 
 const mongoUrl = process.env.MONGO_URL || "mongodb:localhost/test"
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -28,9 +31,24 @@ app.get("/test", (req, res) => {
   res.send("hello there")
 })
 
-app.get("/testing", (req, res) => {
-  res.send("hello there")
-})
+app.get("/sweden", (req, res) => {
+  res.status(200).json({ success: true, response: sweden })
+});
+
+app.get("/europe", (req, res) => {
+  res.status(200).json({
+    data: europe,
+    success: true
+  });
+});
+
+app.get("/worldwide", (req, res) => {
+  res.status(200).json({
+    data: worldwide,
+    success: true
+  });
+});
+
 ///////////////////////User section/////////////////////
 const UserSchema = new mongoose.Schema({
   username: {
