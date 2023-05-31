@@ -256,30 +256,30 @@ app.get("/posts", async (req, res) => {
 
 //create a post
 // app.post("/posts", authenticateUser)
-// app.post("/posts", async (req, res) => {
-//   const { message } = req.body
-//   const accessToken = req.header("Authorization")
-//   try {
-//     const queriedUser = await User.findOne({ accessToken })
-//     const newPost = await new Post({
-//       message: message,
-//       creator: {
-//         creatorId: queriedUser._id,
-//         name: queriedUser.username,
-//         email: queriedUser.email
-//       }
-//     }).save()
-//     res.status(201).json({
-//       response: newPost,
-//       success: true
-//     })
-//   } catch (error) {
-//     res.status(400).json({
-//       response: error,
-//       success: false
-//     })
-//   }
-// })
+app.post("/posts", async (req, res) => {
+  const { message } = req.body
+  // const accessToken = req.header("Authorization")
+  try {
+    // const queriedUser = await User.findOne({ accessToken })
+    const newPost = await new Post({
+      message: message,
+      creator: {
+        // creatorId: queriedUser._id,
+        // name: queriedUser.username,
+        // email: queriedUser.email
+      }
+    }).save()
+    res.status(201).json({
+      response: newPost,
+      success: true
+    })
+  } catch (error) {
+    res.status(400).json({
+      response: error,
+      success: false
+    })
+  }
+})
 
 //update likes for a post
 app.post("/posts/:id/likes", async (req, res) => {
