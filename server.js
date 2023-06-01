@@ -12,6 +12,7 @@ import 'dotenv/config'
 
 const mongoUrl = process.env.MONGO_URL || "mongodb:localhost/test"
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.set('strictQuery', true);
 mongoose.Promise = Promise
 
 
@@ -70,8 +71,8 @@ const UserSchema = new mongoose.Schema({
     trim: true
   },
   accessToken: {
-    type: String
-    // default: () => crypto.randomBytes(128).toString("hex")
+    type: String,
+    default: () => crypto.randomBytes(128).toString("hex")
   }
 })
 
