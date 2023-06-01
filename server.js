@@ -70,8 +70,8 @@ const UserSchema = new mongoose.Schema({
     trim: true
   },
   accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex")
+    type: String
+    // default: () => crypto.randomBytes(128).toString("hex")
   }
 })
 
