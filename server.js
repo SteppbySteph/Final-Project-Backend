@@ -10,9 +10,9 @@ import worldwide from "./worldwide.json"
 
 import 'dotenv/config'
 
-const mongoUrl = process.env.MONGO_URL || "mongodb:localhost/test"
+const mongoUrl = process.env.MONGO_URL || "https://final-project-sup.onrender.com"
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', false);
 mongoose.Promise = Promise
 
 
