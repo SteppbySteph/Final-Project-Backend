@@ -83,7 +83,7 @@ app.post("/register", async (req, res) => {
 
   const { username, email, password } = req.body
   try {
-    const salt = bcrypt.genSaltSync()
+    // const salt = bcrypt.genSaltSync()
 
     if (username.length < 8) {
       res.status(400).json({
@@ -94,13 +94,13 @@ app.post("/register", async (req, res) => {
       const newUser = await new User({
         username: username,
         email: email,
-        password: bcrypt.hashSync(password, salt)
+        // password: bcrypt.hashSync(password, salt)
       }).save()
       res.status(201).json({
         response: {
           username: newUser.username,
           email: newUser.email,
-          accessToken: newUser.accessToken,
+          // accessToken: newUser.accessToken,
           userId: newUser._id
         },
         success: true
