@@ -10,9 +10,9 @@ import worldwide from "./worldwide.json"
 
 import 'dotenv/config'
 
-const mongoUrl = process.env.MONGO_URL || "https://final-project-sup.onrender.com"
+const mongoUrl = process.env.MONGO_URL || "mongodb:localhost/test"
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
 mongoose.Promise = Promise
 
 
@@ -83,7 +83,7 @@ app.post("/register", async (req, res) => {
 
   const { username, email, password } = req.body
   try {
-    // const salt = bcrypt.genSaltSync()
+    const salt = bcrypt.genSaltSync()
 
     if (username.length < 8) {
       res.status(400).json({
@@ -94,13 +94,13 @@ app.post("/register", async (req, res) => {
       const newUser = await new User({
         username: username,
         email: email,
-        // password: bcrypt.hashSync(password, salt)
+        password: bcrypt.hashSync(password, salt)
       }).save()
       res.status(201).json({
         response: {
           username: newUser.username,
           email: newUser.email,
-          // accessToken: newUser.accessToken,
+          accessToken: newUser.accessToken,
           userId: newUser._id
         },
         success: true
