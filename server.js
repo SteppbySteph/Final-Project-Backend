@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/test", (req, res) => {
-  res.send("hello there")
+  res.send("hello there endpoint")
 })
 
 app.get("/sweden", (req, res) => {
